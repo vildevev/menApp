@@ -25,3 +25,22 @@ employeeController.show = function(req, res) {
     }
   });
 };
+
+employeeController.create = function(req, res) {
+  res.render('../views/employees/create');
+};
+
+employeeController.save = function(req, res) {
+  var employee = new Employee(req.body);
+
+  employee.save(function(err) {
+    if(err) {
+      console.log(err);
+      res.render('../views/employees/create');
+    }
+    else {
+      console.log('Successfully created an employee,');
+      res.redirect('/employees/show/'+employee._id)
+    }
+  });
+};
