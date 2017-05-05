@@ -44,3 +44,24 @@ employeeController.save = function(req, res) {
     }
   });
 };
+
+employeeController.edit = function(req, res) {
+  Employee.findOne({_id: req.params.id}).exec(function (err, employee) {
+    if(err) {
+      console.log('Error', err);
+    }
+    else {
+      res.render('../views/employees/edit', {employee: employee});
+    }
+  });
+};
+
+employeeController.update = function(req, res) {
+  Employee.findByIdAndUpdate(req.params.id, { $set: { name: req.body.name, address: req.body.address, position: req.body.position, salary: req.body.salary }}, {new: true}, function (err, employee){
+    if(err) {
+      console.log('Error', err);
+      res.render('../views/employees/edit', {employee: req.body});
+    }
+    res.redirect('/employees/show/'+employee._id);
+  });
+};
