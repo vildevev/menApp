@@ -65,3 +65,17 @@ employeeController.update = function(req, res) {
     res.redirect('/employees/show/'+employee._id);
   });
 };
+
+employeeController.delete = function(req, res) {
+  Employee.remove({_id: req.params.id}, function(err) {
+    if(err) {
+      console.log(err);
+    }
+    else {
+      console.log('Employee deleted!');
+      res.redirect('/employees');
+    }
+  });
+};
+
+module.exports = employeeController; 
